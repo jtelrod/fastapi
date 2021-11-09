@@ -34,11 +34,6 @@ async def root_path():
 async def get_posts():
  return {"data": my_posts}
 
-#orig
-#@app.post("/createposts")
-#async def create_posts(payLoad: dict = Body(...)):
-# print(payLoad)
-# return {"new_post": f"title {payLoad['title']} content: {payLoad['content']}"}
 @app.post("/posts", status_code=HTTP_201_CREATED)
 async def create_posts(post: Post):
  print(post)
@@ -55,8 +50,6 @@ async def get_post(id: int):
  if not post:
   raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                        detail=f"post with id: {id} was not found")
-  # response.status_code = status.HTTP_404_NOT_FOUND
-  # return {"message": f"post with id: {id} was not found"}
  return {"post_detail": post}
 
 
@@ -84,5 +77,4 @@ async def update_post(id: int, post: Post):
    post_dict["id"] = id
    my_posts[index] = post_dict
 
-   #my_posts
    return {"data": post_dict}
